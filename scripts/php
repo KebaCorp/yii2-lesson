@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker-compose run -e DISABLE_YII_MIGRATE=1 -e DISABLE_APP_CRON=1 -e DISABLE_CHANGE_PERMISSIONS=1 --user $(id -u) --no-deps --rm \
+    web php $@
