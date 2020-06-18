@@ -8,6 +8,7 @@ $config = [
     'id'         => 'basic',
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],
+    'name'       => 'Lesson',
     'aliases'    => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -22,7 +23,9 @@ $config = [
         ],
         'user'         => [
             'identityClass'   => \app\models\User::class,
+            'loginUrl'        => ['site/login'],
             'enableAutoLogin' => true,
+            'enableSession'   => true,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

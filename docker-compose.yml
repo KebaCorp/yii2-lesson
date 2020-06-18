@@ -8,6 +8,7 @@ services:
       - APACHE_RUN_USER=#1000
     volumes:
       - ${WEB_ROOT_PATH}:/var/www/html/
+      - ./secrets:/secrets/
     ports:
       - ${WEB_PORT}:80
     working_dir: ${WEB_WORKING_DIR}
