@@ -3,8 +3,6 @@
 namespace app\controllers;
 
 use app\models\LoginForm;
-use app\models\User;
-use KebaCorp\VaultSecret\VaultSecret;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
