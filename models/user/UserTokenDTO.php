@@ -17,35 +17,35 @@ class UserTokenDTO
      *
      * @var string
      */
-    private $_token;
+    private string $_token;
 
     /**
      * Refresh token string.
      *
      * @var string
      */
-    private $_refreshToken;
+    private string $_refreshToken;
 
     /**
      * User's ip.
      *
      * @var string
      */
-    private $_ip;
+    private string $_ip;
 
     /**
      * User agent data.
      *
      * @var string
      */
-    private $_userAgent;
+    private string $_userAgent;
 
     /**
      * Token expiration date.
      *
      * @var int
      */
-    private $_expiresAt;
+    private int $_expiresAt;
 
     /**
      * UserTokenDTO constructor.

@@ -16,13 +16,17 @@ $config = [
     'components' => [
         'request'      => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'wSMZlv2yGZlgGke5UWYq61wFALfY2Y_v',
+            'cookieValidationKey'  => 'wSMZlv2yGZlgGke5UWYq61wFALfY2Y_v',
+            'enableCsrfValidation' => false,
+            'parsers'              => [
+                'application/json' => \yii\web\JsonParser::class,
+            ],
         ],
         'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
         'user'         => [
-            'identityClass'   => \app\models\User::class,
+            'identityClass'   => \app\models\user\User::class,
             'loginUrl'        => ['site/login'],
             'enableAutoLogin' => true,
             'enableSession'   => true,
@@ -53,6 +57,15 @@ $config = [
             'showScriptName'  => false,
             'rules'           => [
 
+            ],
+        ],
+        'i18n'         => [
+            'translations' => [
+                '*' => [
+                    'class'    => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@app/messages',
+                    'fileMap'  => [],
+                ],
             ],
         ],
     ],

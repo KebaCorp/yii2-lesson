@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\models\user;
 
 use yii\mongodb\ActiveQuery;
 
@@ -48,6 +48,18 @@ class UserQuery extends ActiveQuery
     }
 
     /**
+     * Find by username.
+     *
+     * @param string $username
+     *
+     * @return UserQuery
+     */
+    public function byUsername(string $username): UserQuery
+    {
+        return $this->andWhere(['usernames' => $username]);
+    }
+
+    /**
      * Find by usernames.
      *
      * @param array $usernames
@@ -72,7 +84,7 @@ class UserQuery extends ActiveQuery
      * {@inheritdoc}
      * @return User|array|null
      */
-    public function one($db = null): ?array
+    public function one($db = null)
     {
         return parent::one($db);
     }
