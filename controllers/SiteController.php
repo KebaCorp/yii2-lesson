@@ -2,7 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\LoginForm;
+use app\models\auth\LoginForm;
+use app\models\auth\SignUpForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -101,5 +102,26 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * Sign up new user.
+     *
+     * @return string|Response
+     * @throws \yii\base\Exception
+     */
+    public function actionSignup()
+    {
+        $model = new SignUpForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signUp()) {
+                return $this->goHome();
+            }
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 }

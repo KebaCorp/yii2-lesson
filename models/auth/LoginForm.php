@@ -1,7 +1,9 @@
 <?php
 
-namespace app\models;
+namespace app\models\auth;
 
+use app\models\user\User;
+use app\models\user\UserTokenDTO;
 use Yii;
 use yii\base\Model;
 
@@ -13,12 +15,20 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
-    public $username;
-    public $password;
-    public $rememberMe = true;
+    public ?string $username   = null;
 
-    private $_user = false;
+    public ?string $password   = null;
 
+    public bool    $rememberMe = true;
+
+    private ?User  $_user      = null;
+
+    /**
+     * User's token DTO.
+     *
+     * @var UserTokenDTO|null
+     */
+    private ?UserTokenDTO $_tokenDto = null;
 
     /**
      * @return array the validation rules.
@@ -40,9 +50,9 @@ class LoginForm extends Model
      * This method serves as the inline validation for password.
      *
      * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
+     * @param array  $params    the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
+    public function validatePassword($attribute, $params): void
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -55,13 +65,21 @@ class LoginForm extends Model
 
     /**
      * Logs in a user using the provided username and password.
+     *
      * @return bool whether the user is logged in successfully
      */
-    public function login()
+    public function login(): bool
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            if ($user = $this->getUser()) {
+                $this->_tokenDto = $user->refreshToken();
+
+                if ($user->save()) {
+                    return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+                }
+            }
         }
+
         return false;
     }
 
@@ -70,12 +88,22 @@ class LoginForm extends Model
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->_user === null) {
+            $this->_user = User::find()->byUsername($this->username)->one();
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Returns user's token DTO.
+     *
+     * @return UserTokenDTO|null
+     */
+    public function getTokenDto(): ?UserTokenDTO
+    {
+        return $this->_tokenDto;
     }
 }
