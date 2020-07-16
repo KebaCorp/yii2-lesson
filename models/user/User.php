@@ -129,7 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
             ['roles', 'each', 'rule' => ['string']],
             ['usernames', 'each', 'rule' => ['string']],
-//            ['usernames', 'validateUsernames'],
+            //            ['usernames', 'validateUsernames'],
         ];
     }
 
@@ -198,7 +198,25 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::find()->byToken($token)->active()->one();
+        if ($user = static::find()->byToken($token)->active()->one()) {
+            if ($user->checkTokenIsActual($token)) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find user by refresh token.
+     *
+     * @param string $refreshToken
+     *
+     * @return User|null
+     */
+    public static function findIdentityByRefreshToken(string $refreshToken): ?User
+    {
+        return static::find()->byRefreshToken($refreshToken)->active()->one();
     }
 
     /**

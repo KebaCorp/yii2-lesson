@@ -3,6 +3,7 @@
 namespace app\controllers\api;
 
 use app\models\auth\LoginForm;
+use app\models\user\User;
 use Yii;
 
 /**
@@ -12,6 +13,9 @@ use Yii;
  */
 class AuthorizationController extends ApiPublicController
 {
+    /**
+     * @return array
+     */
     public function actionLogin()
     {
         $model = new LoginForm();
@@ -22,6 +26,19 @@ class AuthorizationController extends ApiPublicController
                     'user'  => $model->getUser()->getPublicData(),
                     'token' => $model->getTokenDto()->getPublicTokenData(),
                 ];
+            }
+        }
+    }
+
+    public function actionUpdateToken()
+    {
+        if ($refreshToken = Yii::$app->request->post('refreshToken')) {
+            if ($user = User::findIdentityByRefreshToken($refreshToken)) {
+                $tokenDto = $user->refreshToken();
+
+                if ($user->save()) {
+                    return ['token' => $tokenDto->getPublicTokenData()];
+                }
             }
         }
     }

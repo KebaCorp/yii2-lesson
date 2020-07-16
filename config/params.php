@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'secondsToAccessTokenExpires' => 60 * 60 * 24 * 30,
+    'secondsToAccessTokenExpires' => 60 * 10,
 ];

@@ -36,6 +36,18 @@ class UserQuery extends ActiveQuery
     }
 
     /**
+     * Find by refresh token.
+     *
+     * @param string $refreshToken
+     *
+     * @return UserQuery
+     */
+    public function byRefreshToken(string $refreshToken): UserQuery
+    {
+        return $this->andWhere(['tokens.refreshToken' => $refreshToken]);
+    }
+
+    /**
      * Find active users.
      *
      * @param bool $active

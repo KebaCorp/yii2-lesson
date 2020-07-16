@@ -9,6 +9,7 @@ $config = [
     'basePath'   => dirname(__DIR__),
     'bootstrap'  => ['log'],
     'name'       => 'Lesson',
+    'timeZone'   => 'Europe/Moscow',
     'aliases'    => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
