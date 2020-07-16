@@ -20,8 +20,9 @@ $config = [
             'class' => \yii\caching\FileCache::class,
         ],
         'user'    => [
-            'identityClass'   => \app\models\user\User::class,
-            'enableAutoLogin' => true,
+            'class'         => \yii\web\User::class,
+            'identityClass' => \app\models\user\User::class,
+            'enableSession' => true,
         ],
         'log'     => [
             'targets' => [

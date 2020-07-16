@@ -26,7 +26,8 @@
     "yiisoft/yii2-mongodb": "~2.1.0",
     "jenssegers/mongodb": "^3.4",
     "mongofill/mongofill": "dev-master",
-    "kebacorp/vaultsecret": "^1.1.0"
+    "kebacorp/vaultsecret": "^1.1.0",
+    "ext-mongodb": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
