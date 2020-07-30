@@ -134,4 +134,21 @@ class Hero extends ActiveRecord
             ],
         ];
     }
+
+    /**
+     * {@inheritDoc}
+     * @return HeroQuery
+     */
+    public static function find()
+    {
+        return new HeroQuery(get_called_class());
+    }
+
+    /**
+     * Increment views of the hero.
+     */
+    public function incrementViews()
+    {
+        $this->views = $this->views + 1;
+    }
 }
