@@ -69,16 +69,31 @@ class Hero extends ActiveRecord
                     'mainPhoto',
                     'description',
                     'shortDescription',
+                    'keywords',
+                ],
+                'required',
+            ],
+            [
+                [
                     'dislikes',
                     'views',
-                    'deleted',
-                    'keywords',
-                    'creatorUserId',
                     'createdAt',
                     'updatedAt',
                 ],
-                'safe',
+                'integer',
             ],
+            [
+                [
+                    'fullName',
+                    'mainPhoto',
+                    'description',
+                    'shortDescription',
+                    'creatorUserId',
+                ],
+                'string',
+            ],
+            ['deleted', 'boolean'],
+            ['keywords', 'each', 'rule' => ['string']],
         ];
     }
 
@@ -127,6 +142,7 @@ class Hero extends ActiveRecord
                 'attributeTypes'        => [
                     'dislikes' => AttributeTypecastBehavior::TYPE_INTEGER,
                     'views'    => AttributeTypecastBehavior::TYPE_INTEGER,
+                    'deleted'  => AttributeTypecastBehavior::TYPE_BOOLEAN,
                 ],
                 'typecastBeforeSave'    => true,
                 'typecastAfterValidate' => false,
